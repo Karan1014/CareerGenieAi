@@ -20,13 +20,13 @@ def set_headers(response):
     else:
         response.headers['X-Robots-Tag'] = 'noindex, nofollow'
     return response
-app.secret_key = "careergenie_secret_2026"
+app.secret_key = os.getenv("SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///careergenie.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # ── Admin credentials (change these) ──
-ADMIN_EMAIL    = "admin@careergenie.com"
-ADMIN_PASSWORD = "admin@123"
+ADMIN_EMAIL    = os.getenv("ADMIN_EMAIL")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)

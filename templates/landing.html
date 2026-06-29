@@ -1,0 +1,311 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ══ PRIMARY SEO ══ -->
+    <title>CareerGenie AI – Free AI Resume Analyzer & ATS Score Checker</title>
+    <meta name="description" content="Upload your resume and get instant ATS score, skill gap analysis, missing skills, and a personalized 3-month career roadmap powered by AI. Free to use.">
+    <meta name="keywords" content="resume analyzer, ATS score checker, skill gap analysis, career roadmap, AI resume, job seeker tool, resume scoring, CareerGenie AI">
+    <meta name="author" content="Karan Thakur">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://careergenie.ai/">
+
+    <!-- ══ OPEN GRAPH (WhatsApp, LinkedIn, Facebook) ══ -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://careergenie.ai/">
+    <meta property="og:title" content="CareerGenie AI – Free AI Resume Analyzer & ATS Score Checker">
+    <meta property="og:description" content="Get your resume scored by AI in seconds. Find skill gaps, missing skills, and get a personalized 3-month career roadmap. Free to use.">
+    <meta property="og:image" content="https://careergenie.ai/static/og-image.png">
+    <meta property="og:site_name" content="CareerGenie AI">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- ══ TWITTER CARD ══ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://careergenie.ai/">
+    <meta name="twitter:title" content="CareerGenie AI – Free AI Resume Analyzer">
+    <meta name="twitter:description" content="Upload your resume, get instant ATS score, skill gaps, and a 3-month career roadmap powered by AI.">
+    <meta name="twitter:image" content="https://careergenie.ai/static/og-image.png">
+
+    <!-- ══ STRUCTURED DATA — JSON-LD (Google Rich Results) ══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CareerGenie AI",
+      "url": "https://careergenie.ai/",
+      "description": "AI-powered resume analyzer that gives instant ATS score, skill gap analysis, missing skills detection, and a personalized 3-month career roadmap.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+      "author": { "@type": "Person", "name": "Karan Thakur" },
+      "featureList": ["Instant ATS Score", "Skill Gap Analysis", "Missing Skills Detection", "3-Month Career Roadmap", "Job Recommendations"]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; color: #1a1a2e; background: #fff; }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 80px;
+            border-bottom: 1px solid #e8eaf0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+        }
+        .nav-brand { font-size: 1.2rem; font-weight: 800; color: #0f172a; }
+        .nav-links { display: flex; gap: 12px; }
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+        }
+        .btn-outline { color: #6366f1; border: 1.5px solid #6366f1; }
+        .btn-solid { color: #fff; background: linear-gradient(135deg, #6366f1, #4f46e5); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 130px 20px 100px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 580px;
+            margin: 0 auto 48px;
+            line-height: 1.8;
+        }
+        .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .hero-btns a {
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+        }
+        .hero-btns .primary {
+            color: #fff;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+        .hero-btns .secondary {
+            color: #4f46e5;
+            border: 2px solid #c7d2fe;
+        }
+
+        /* Features */
+        .features { background: #f8fafc; padding: 100px 20px; }
+        .features-inner { max-width: 960px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
+        .section-sub { text-align: center; font-size: 1rem; color: #64748b; margin-bottom: 60px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .feature-card {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #e8eaf0;
+            padding: 36px 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .feature-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+            font-size: 0.78rem; font-weight: 800;
+        }
+        .feature-card h3 { font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .feature-card p { font-size: 0.88rem; color: #64748b; line-height: 1.8; }
+
+        /* How it Works */
+        .how { padding: 100px 20px; }
+        .how-inner { max-width: 960px; margin: 0 auto; }
+        .step-card {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #e8eaf0;
+            padding: 40px 28px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .step-num {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
+            color: #fff; font-size: 1.4rem; font-weight: 800;
+        }
+        .step-card h3 { font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .step-card p { font-size: 0.88rem; color: #64748b; line-height: 1.8; }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            padding: 40px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-brand-name { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+        .footer-brand-sub { font-size: 0.78rem; color: #64748b; }
+        .footer-links { display: flex; gap: 12px; }
+        .footer-links a { font-size: 0.85rem; font-weight: 600; color: #94a3b8; text-decoration: none; }
+        .footer-copy { font-size: 0.78rem; color: #475569; text-align: right; }
+
+        /* ── MOBILE RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav { padding: 14px 20px; }
+            .nav-links a { padding: 7px 14px; font-size: 0.82rem; }
+            .hero { padding: 80px 20px 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 0.95rem; }
+            .hero-btns a { padding: 13px 28px; font-size: 0.9rem; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .features { padding: 60px 20px; }
+            .section-title { font-size: 1.6rem; }
+            .how { padding: 60px 20px; }
+            footer {
+                padding: 32px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .footer-copy { text-align: left; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero-btns { flex-direction: column; align-items: center; }
+            .hero-btns a { width: 100%; text-align: center; }
+            .nav-brand { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-brand">CareerGenie AI</div>
+        <div class="nav-links">
+            <a href="/login" class="btn-outline">Login</a>
+            <a href="/register" class="btn-solid">Register Here</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">AI-POWERED RESUME ANALYZER</div>
+        <h1>
+            Get Your Resume <br>
+            <span>Analyzed by AI</span>
+        </h1>
+        <p>Upload your resume and get instant ATS score, skill gap analysis, missing skills and a personalized 3-month career roadmap.</p>
+        <div class="hero-btns">
+            <a href="/register" class="primary">Register Here</a>
+            <a href="/login" class="secondary">Login to Dashboard</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features-inner">
+            <h2 class="section-title">Why CareerGenie AI?</h2>
+            <p class="section-sub">Everything you need to land your dream job</p>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background:#eef2ff; color:#4f46e5;">ATS</div>
+                    <h3>Instant ATS Score</h3>
+                    <p>Get your resume scored against industry standards in seconds and know exactly where you stand against other candidates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background:#dcfce7; color:#166534;">GAP</div>
+                    <h3>Skill Gap Analysis</h3>
+                    <p>Find exactly what skills you are missing and what the industry expects from candidates in 2026 for your target role.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background:#fef9c3; color:#92400e;">MAP</div>
+                    <h3>3-Month Roadmap</h3>
+                    <p>Get a personalized learning plan to boost your career fast with detailed month by month guidance tailored just for you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how">
+        <div class="how-inner">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-sub">Get your results in 3 simple steps</p>
+            <div class="grid-3">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Upload Resume</h3>
+                    <p>Upload your PDF resume and enter your target career role. Our system securely reads your resume content.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>AI Analyzes</h3>
+                    <p>Our AI powered by LLaMA 3.3 deeply analyzes your resume against 2026 industry standards and job requirements.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Get Results</h3>
+                    <p>Get your ATS score, missing skills, projects to build and a complete 3-month learning roadmap instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+            <div class="footer-brand-name">CareerGenie AI</div>
+            <div class="footer-brand-sub">AI-powered resume analyzer for job seekers</div>
+        </div>
+        <div class="footer-links">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+        <div class="footer-copy">
+            © 2026 CareerGenie AI. All rights reserved.<br> Contact: careergeniai@gamil.com<br>
+            Developed by <span style="color:#6366f1; font-weight:600;">Karan Thakur</span>
+        </div>
+    </footer>
+
+</body>
+</html>
