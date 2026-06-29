@@ -1,0 +1,621 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis – CareerGenie AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #f5f6fa;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: #1a1a2e;
+            font-size: 14px;
+        }
+
+        .page {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        /* ── Navbar ── */
+        .navbar-custom {
+            background: #fff;
+            border-bottom: 1px solid #e8eaf0;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-custom .brand {
+            font-weight: 800;
+            color: #0f172a;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .navbar-custom .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar-custom .btn-history {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6366f1;
+            padding: 7px 14px;
+            border: 1px solid #c7d2fe;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .navbar-custom .btn-logout {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 7px 14px;
+            background: #6366f1;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e8eaf0;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #e8f0fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #3b5bdb;
+            flex-shrink: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .user-meta {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .user-meta span {
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .badge-track {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-intern { background: #e8f5e9; color: #2e7d32; }
+        .badge-pro    { background: #e3f2fd; color: #1565c0; }
+
+        .report-label {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        /* ── Grid layouts ── */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 130px 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .grid-1 { margin-bottom: 12px; }
+
+        /* ── Cards ── */
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #e8eaf0 !important;
+            padding: 13px 14px;
+            box-shadow: none !important;
+        }
+
+        .card-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        /* ── Score ── */
+        .score-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .score-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-ring-high { background: conic-gradient(#22c55e 0% {{ score }}%, #e8eaf0 {{ score }}% 100%); }
+        .score-ring-mid  { background: conic-gradient(#f59e0b 0% {{ score }}%, #e8eaf0 {{ score }}% 100%); }
+        .score-ring-low  { background: conic-gradient(#ef4444 0% {{ score }}%, #e8eaf0 {{ score }}% 100%); }
+
+        .score-inner {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+        }
+
+        .score-num   { font-size: 20px; font-weight: 800; color: #1a1a2e; line-height: 1; }
+        .score-denom { font-size: 10px; color: #6b7280; }
+        .score-text  { font-size: 11px; font-weight: 600; margin-top: 7px; }
+        .score-text-high { color: #22c55e; }
+        .score-text-mid  { color: #f59e0b; }
+        .score-text-low  { color: #ef4444; }
+
+        /* ── Tags ── */
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin: 2px;
+            font-weight: 500;
+        }
+
+        .tag-green { background: #dcfce7; color: #166534; }
+        .tag-red   { background: #fee2e2; color: #991b1b; }
+
+        /* ── Lists ── */
+        ul.clean { padding-left: 13px; }
+        ul.clean li { font-size: 12px; color: #374151; padding: 2px 0; line-height: 1.5; }
+
+        /* ── Certificates ── */
+        .cert-tag {
+            display: inline-block;
+            font-size: 11.5px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin: 3px 3px 3px 0;
+            background: #f0f4ff;
+            color: #1e40af;
+            font-weight: 600;
+            border: 1px solid #c7d7fc;
+        }
+
+        /* ── Roadmap ── */
+        .roadmap-block {
+            font-size: 12px;
+            color: #374151;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        /* ── Footer ── */
+        .footer { text-align: center; padding: 12px 0 4px; }
+        .footer a {
+            font-size: 12px;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 7px 20px;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+        }
+        .footer a:hover { background: #eff6ff; }
+
+        @media print {
+            body { background: #fff; }
+            .page { padding: 8px; }
+            .footer { display: none; }
+        }
+
+        /* ══════════════════════════════════
+           MOBILE RESPONSIVE — 768px (Tablet)
+        ══════════════════════════════════ */
+        @media (max-width: 768px) {
+            .page {
+                padding: 14px 12px;
+            }
+
+            /* Navbar */
+            .navbar-custom {
+                padding: 10px 14px;
+            }
+
+            .navbar-custom .brand {
+                font-size: 0.9rem;
+            }
+
+            .navbar-custom .btn-history,
+            .navbar-custom .btn-logout {
+                font-size: 0.78rem;
+                padding: 6px 10px;
+            }
+
+            /* Header */
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 14px;
+            }
+
+            .header-right {
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            /* Grids → single column */
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            /* Score card horizontal on tablet */
+            .score-wrap {
+                flex-direction: row;
+                gap: 16px;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .score-text {
+                margin-top: 0;
+            }
+        }
+
+        /* ══════════════════════════════════
+           MOBILE — 480px (Phone)
+        ══════════════════════════════════ */
+        @media (max-width: 480px) {
+            body { font-size: 13px; }
+
+            .page {
+                padding: 10px 8px;
+            }
+
+            /* Navbar compact */
+            .navbar-custom {
+                padding: 8px 12px;
+            }
+
+            .navbar-custom .brand {
+                font-size: 0.85rem;
+            }
+
+            .navbar-custom .btn-history {
+                display: none; /* sirf logout dikhao, space bachao */
+            }
+
+            .navbar-custom .btn-logout {
+                font-size: 0.78rem;
+                padding: 6px 12px;
+            }
+
+            /* Header */
+            .header {
+                padding: 12px;
+            }
+
+            .user-name {
+                font-size: 14px;
+            }
+
+            .user-meta {
+                font-size: 10px;
+            }
+
+            /* Score card — vertical center */
+            .score-wrap {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .score-ring {
+                width: 72px;
+                height: 72px;
+            }
+
+            .score-inner {
+                width: 54px;
+                height: 54px;
+            }
+
+            .score-num { font-size: 18px; }
+
+            /* Cards padding chhota */
+            .card {
+                padding: 11px 12px;
+            }
+
+            .card-label {
+                font-size: 9px;
+                margin-bottom: 6px;
+            }
+
+            /* Tags full line pe */
+            .tag {
+                font-size: 10.5px;
+                padding: 2px 7px;
+                margin: 2px 2px 2px 0;
+            }
+
+            .cert-tag {
+                font-size: 11px;
+                padding: 3px 10px;
+            }
+
+            /* Lists */
+            ul.clean li {
+                font-size: 11.5px;
+            }
+
+            /* Roadmap */
+            .roadmap-block {
+                font-size: 11.5px;
+                line-height: 1.65;
+            }
+
+            /* Footer */
+            .footer a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Navbar ── -->
+    <div class="navbar-custom">
+        <a href="/" class="brand">CareerGenie AI</a>
+        <div class="nav-links">
+            <a href="/history" class="btn-history">History</a>
+            <a href="/logout" class="btn-logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="page">
+
+        <!-- ── Header ── -->
+        <div class="header">
+            <div class="header-left">
+                <div class="avatar">
+                    {% if user_name %}
+                        {{ user_name.split()[0][0] | upper }}{% if user_name.split()|length > 1 %}{{ user_name.split()[-1][0] | upper }}{% endif %}
+                    {% else %}
+                        ?
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="user-name">{{ user_name if user_name else 'Candidate' }}</div>
+                    <div class="user-meta">
+                        Applying for <span>{{ career }}</span> &nbsp;·&nbsp; {{ filename }}
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                {% if 'intern' in career.lower() %}
+                    <span class="badge-track badge-intern">Internship Track</span>
+                {% else %}
+                    <span class="badge-track badge-pro">Professional Role</span>
+                {% endif %}
+                <span class="report-label">Resume Analysis Report</span>
+            </div>
+        </div>
+
+        <!-- ── Score + Jobs + Skills Found ── -->
+        <div class="grid-3">
+
+            <!-- Score -->
+            <div class="card d-flex align-items-center justify-content-center">
+                <div class="score-wrap">
+                    <div class="card-label text-center">Score</div>
+                    <div class="score-ring
+                        {% if score >= 70 %}score-ring-high
+                        {% elif score >= 40 %}score-ring-mid
+                        {% else %}score-ring-low{% endif %}">
+                        <div class="score-inner">
+                            <span class="score-num">{{ score }}</span>
+                            <span class="score-denom">/100</span>
+                        </div>
+                    </div>
+                    <span class="score-text
+                        {% if score >= 70 %}score-text-high
+                        {% elif score >= 40 %}score-text-mid
+                        {% else %}score-text-low{% endif %}">
+                        {% if score >= 70 %}Strong — apply now
+                        {% elif score >= 40 %}Decent — improve first
+                        {% else %}Needs work
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Jobs -->
+            <div class="card">
+                <div class="card-label">Jobs to apply right now</div>
+                {% if suggested_jobs %}
+                    <ul class="clean">
+                        {% for job in suggested_jobs %}
+                            <li>{{ job }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="font-size:12px; color:#9ca3af;">No jobs extracted.</p>
+                {% endif %}
+            </div>
+
+            <!-- Skills Found -->
+            <div class="card">
+                <div class="card-label">Skills found in resume</div>
+                {% if current_skills %}
+                    {% for skill in current_skills %}
+                        <span class="tag tag-green">{{ skill }}</span>
+                    {% endfor %}
+                {% else %}
+                    <p style="font-size:12px; color:#9ca3af;">No skills detected.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- ── Missing Skills + Industry Requirements ── -->
+        <div class="grid-2">
+
+            <div class="card">
+                <div class="card-label">Missing skills</div>
+                {% if missing_skills %}
+                    {% for skill in missing_skills %}
+                        <span class="tag tag-red">{{ skill }}</span>
+                    {% endfor %}
+                {% else %}
+                    <p style="font-size:12px; color:#9ca3af;">No missing skills detected.</p>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <div class="card-label">Industry requirements (2026)</div>
+                {% if industry_req %}
+                    <ul class="clean">
+                        {% for item in industry_req %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="font-size:12px; color:#9ca3af;">Not available.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- ── Projects + Improvements ── -->
+        <div class="grid-2">
+
+            <div class="card">
+                <div class="card-label">Projects to build</div>
+                {% if projects %}
+                    <ul class="clean">
+                        {% for project in projects %}
+                            <li>{{ project }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="font-size:12px; color:#9ca3af;">No projects suggested.</p>
+                {% endif %}
+            </div>
+
+            <div class="card">
+                <div class="card-label">Resume improvements</div>
+                {% if improvements %}
+                    <ul class="clean">
+                        {% for tip in improvements %}
+                            <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="font-size:12px; color:#9ca3af;">No suggestions available.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- ── Certificates ── -->
+        {% if certificates %}
+        <div class="card grid-1">
+            <div class="card-label">Certificates</div>
+            {% for cert in certificates %}
+                <span class="cert-tag">{{ cert.name }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- ── 3-Month Roadmap ── -->
+        <div class="card grid-1">
+            <div class="card-label">3-month learning roadmap</div>
+            <div class="roadmap-block">
+                {% if roadmap %}
+                    {{ roadmap | replace('**', '') | replace('##', '') | replace('# ', '') | trim }}
+                {% else %}
+                    No roadmap available.
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- ── Footer ── -->
+        <div class="footer">
+            <a href="/">Analyze another resume</a>
+        </div>
+
+    </div>
+</body>
+</html>
