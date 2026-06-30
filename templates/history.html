@@ -1,0 +1,154 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History – CareerGenie AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background: #f5f6fa; color: #1a1a2e; }
+        .navbar { background: #fff; border-bottom: 1px solid #e8eaf0; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
+        .navbar-brand { font-size: 1.2rem; font-weight: 800; color: #0f172a; text-decoration: none; }
+        .navbar-right { display: flex; gap: 12px; align-items: center; }
+        .navbar-right a { font-size: 0.85rem; font-weight: 600; text-decoration: none; padding: 7px 16px; border-radius: 8px; transition: all 0.2s; }
+        .btn-outline { border: 1.5px solid #6366f1; color: #6366f1; }
+        .btn-outline:hover { background: #eef2ff; }
+        .btn-solid { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff !important; box-shadow: 0 3px 10px rgba(99,102,241,0.3); }
+        .btn-solid:hover { opacity: 0.9; }
+        .page { max-width: 860px; margin: 36px auto; padding: 0 16px; }
+        .page-title { font-size: 1.4rem; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+        .page-sub { font-size: 0.85rem; color: #64748b; margin-bottom: 24px; }
+        .empty { text-align: center; padding: 60px 20px; background: #fff; border-radius: 14px; border: 1px solid #e8eaf0; }
+        .empty p { color: #64748b; margin-bottom: 16px; font-size: 0.9rem; }
+        .analysis-card { background: #fff; border-radius: 12px; border: 1px solid #e8eaf0; padding: 18px 22px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; transition: box-shadow 0.2s; }
+        .analysis-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+        .card-left { display: flex; align-items: center; gap: 16px; }
+        .score-badge { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; }
+        .score-high { background: #dcfce7; color: #166534; }
+        .score-mid  { background: #fef9c3; color: #92400e; }
+        .score-low  { background: #fee2e2; color: #991b1b; }
+        .card-info h3 { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+        .card-info p { font-size: 0.78rem; color: #64748b; }
+        .card-actions { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+        .card-actions a { font-size: 0.8rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; text-decoration: none; transition: all 0.2s; }
+        .btn-view { background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; }
+        .btn-view:hover { background: #e0e7ff; }
+        .btn-download { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; box-shadow: 0 2px 8px rgba(99,102,241,0.25); }
+        .btn-download:hover { opacity: 0.9; }
+        .btn-delete { background: none; border: 1px solid #fca5a5; color: #dc2626; padding: 7px 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; display: flex; align-items: center; gap: 4px; font-family: 'Poppins', sans-serif; font-weight: 600; }
+        .btn-delete:hover { background: #fee2e2; border-color: #dc2626; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.45); z-index: 999; align-items: center; justify-content: center; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background: #fff; border-radius: 16px; padding: 28px 28px 24px; max-width: 380px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.15); animation: popIn 0.18s ease; }
+        @keyframes popIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-icon { width: 48px; height: 48px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 1.3rem; }
+        .modal-box h2 { font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+        .modal-box p  { font-size: 0.82rem; color: #64748b; margin-bottom: 20px; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-cancel { background: #f1f5f9; border: none; color: #475569; padding: 8px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif; transition: background 0.2s; }
+        .modal-cancel:hover { background: #e2e8f0; }
+        .modal-confirm { background: #dc2626; border: none; color: #fff; padding: 8px 18px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif; transition: background 0.2s; }
+        .modal-confirm:hover { background: #b91c1c; }
+        .analysis-card.deleting { opacity: 0; transform: translateX(30px); transition: opacity 0.3s ease, transform 0.3s ease; }
+
+        /* ── MOBILE RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .navbar { padding: 12px 16px; }
+            .navbar-brand { font-size: 1rem; }
+            .navbar-right a { padding: 6px 10px; font-size: 0.78rem; }
+            .analysis-card { flex-direction: column; align-items: flex-start; padding: 16px; }
+            .card-actions { width: 100%; flex-wrap: wrap; }
+            .card-actions a, .btn-delete { flex: 1; text-align: center; justify-content: center; }
+            .page-title { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/" class="navbar-brand">CareerGenie AI</a>
+        <div class="navbar-right">
+            <a href="/" class="btn-outline">+ New Analysis</a>
+            <a href="/logout" class="btn-solid">Logout</a>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="page-title">Analysis History</div>
+        <div class="page-sub">All your previous resume analyses</div>
+
+        {% if analyses %}
+            {% for a in analyses %}
+            <div class="analysis-card" id="card-{{ a.id }}">
+                <div class="card-left">
+                    <div class="score-badge {% if a.score >= 70 %}score-high{% elif a.score >= 40 %}score-mid{% else %}score-low{% endif %}">
+                        {{ a.score }}
+                    </div>
+                    <div class="card-info">
+                        <h3>{{ a.user_name }} — {{ a.career }}</h3>
+                        <p>{{ a.filename }} &nbsp;·&nbsp; {{ a.created_at.strftime('%d %b %Y, %I:%M %p') }}</p>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="/history/{{ a.id }}" class="btn-view">View</a>
+                    <a href="/download/{{ a.id }}" class="btn-download">Download</a>
+                    <button class="btn-delete" onclick="confirmDelete({{ a.id }})">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
+                        </svg>
+                        Delete
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty" id="empty-state">
+                <p>No analyses yet. Analyze your first resume!</p>
+                <a href="/" class="btn-solid" style="padding:10px 24px; border-radius:8px; font-size:0.9rem; text-decoration:none;">Analyze Resume</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-box">
+            <div class="modal-icon">🗑️</div>
+            <h2>Delete Analysis?</h2>
+            <p>This analysis will be permanently deleted. This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-confirm" id="confirmBtn" onclick="doDelete()">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingId = null;
+        function confirmDelete(id) { pendingId = id; document.getElementById('deleteModal').classList.add('active'); }
+        function closeModal() { document.getElementById('deleteModal').classList.remove('active'); pendingId = null; }
+        async function doDelete() {
+            if (!pendingId) return;
+            const btn = document.getElementById('confirmBtn');
+            btn.textContent = 'Deleting...';
+            btn.disabled = true;
+            try {
+                const formData = new FormData();
+                const res = await fetch(`/delete/${pendingId}`, { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: formData });
+                if (res.ok) {
+                    closeModal();
+                    const card = document.getElementById(`card-${pendingId}`);
+                    card.classList.add('deleting');
+                    setTimeout(() => {
+                        card.remove();
+                        const remaining = document.querySelectorAll('.analysis-card');
+                        if (remaining.length === 0) {
+                            document.querySelector('.page').innerHTML += `<div class="empty" id="empty-state"><p>No analyses yet. Analyze your first resume!</p><a href="/" class="btn-solid" style="padding:10px 24px; border-radius:8px; font-size:0.9rem; text-decoration:none;">Analyze Resume</a></div>`;
+                        }
+                    }, 300);
+                } else { alert('Could not delete. Please try again.'); closeModal(); }
+            } catch (e) { alert('Network error. Please try again.'); closeModal(); }
+            finally { btn.textContent = 'Yes, Delete'; btn.disabled = false; }
+        }
+        document.getElementById('deleteModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+    </script>
+</body>
+</html>
