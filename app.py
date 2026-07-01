@@ -511,7 +511,8 @@ def admin_delete_user(user_id):
     return redirect(url_for('admin_dashboard'))
 
 
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=False, host='0.0.0.0', port=5000)
